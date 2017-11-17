@@ -237,8 +237,8 @@ public class EntityListener implements Listener{
 					sb.append(String.format(" Group%s Durability[%d/%d]",
 							groupName,
 							pr.getDurability(),
-							ReinforcementType.getReinforcementType
-							(pr.getStackRepresentation()).getHitPoints()));
+							(int)(Citadel.getReinforcementManager().getMatMultiplier(pr.getLocation().getBlock().getType())*
+                                                        ReinforcementType.getReinforcementType(pr.getStackRepresentation()).getHitPoints())));
 					int maturationTime = timeUntilMature(pr);
 					if (maturationTime != 0) {
 						sb.append(" Immature[");

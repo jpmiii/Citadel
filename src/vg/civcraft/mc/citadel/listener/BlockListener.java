@@ -579,9 +579,8 @@ public class BlockListener implements Listener {
 								" Group%s Durability[%d/%d]",
 								groupName,
 								reinforcement.getDurability(),
-								ReinforcementType.getReinforcementType(
-										reinforcement.getStackRepresentation())
-										.getHitPoints()));
+								(int)(Citadel.getReinforcementManager().getMatMultiplier(reinforcement.getLocation().getBlock().getType())*
+                                                                        ReinforcementType.getReinforcementType(reinforcement.getStackRepresentation()).getHitPoints())));
 						int maturationTime = timeUntilMature(reinforcement);
 						if (maturationTime != 0) {
 							sb.append(" Immature[");

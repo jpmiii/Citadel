@@ -145,7 +145,7 @@ public class PlayerReinforcement extends Reinforcement{
 	 * @return Returns the percent of the reinforcement.
 	 */
     public double getHealth() {
-        return (double)getDurability() / ((double)ReinforcementType.
+        return (double)getDurability() / (Citadel.getReinforcementManager().getMatMultiplier(this.getLocation().getBlock().getType())*(double)ReinforcementType.
         		getReinforcementType(stack).getHitPoints());
     }
     /**

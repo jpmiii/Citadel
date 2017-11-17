@@ -11,10 +11,12 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import vg.civcraft.mc.citadel.database.CitadelReinforcementData;
@@ -48,7 +50,8 @@ public class ReinforcementManager {
 	
 	private CitadelReinforcementData db;
 	private long dayMultiplier;
-
+        public HashMap<Material, Double> matMultipliers;
+        
 	// This shit is cool
 	private RemovalListener<Location, Reinforcement> removalListener = new RemovalListener<Location, Reinforcement>() {
 		public void onRemoval(RemovalNotification<Location, Reinforcement> removal) {
@@ -87,9 +90,18 @@ public class ReinforcementManager {
 	public ReinforcementManager(CitadelReinforcementData db) {
 		this.db = db;
 		this.dayMultiplier = (long)CitadelConfigManager.getDayMultiplier();
+                this.matMultipliers = CitadelConfigManager.getMatMultipliers();
 		
 		scheduleSave();
 	}
+        
+        public double getMatMultiplier(Material mat){
+            if (mat == null || !matMultipliers.containsKey(mat)){
+                return 1;
+            } else {
+                return matMultipliers.get(mat);
+            }
+        }
 	
 	public long getDayMultiplier(){
 		return dayMultiplier;

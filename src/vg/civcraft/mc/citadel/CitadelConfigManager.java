@@ -1,6 +1,7 @@
 package vg.civcraft.mc.citadel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +33,20 @@ public class CitadelConfigManager {
 		}
 		return null;
 	}
+        
+        public static HashMap<Material,Double> getMatMultipliers(){
+                HashMap<Material,Double> matMultipliers = new HashMap<Material, Double>();
+                if (config.getConfigurationSection("multipliers") == null)
+			return matMultipliers;
+                for (String sect: config.getConfigurationSection("multipliers").getKeys(false)){
+                    try {
+                        matMultipliers.put(Material.getMaterial(sect), (Double)config.getConfigurationSection("multipliers").get(sect));
+                    } catch (IllegalArgumentException e){
+                        Citadel.getInstance().getLogger().warning("The specified multiplier material or multiplier number for " + sect + " could not be parsed");
+                    }
+                }
+                return matMultipliers;
+        }
 	
 	public static List<String> getNonReinforceableMaterials(String mat){
 		if(config.getConfigurationSection("reinforcements." + mat).contains("non_reinforceables")) {
